@@ -18,4 +18,4 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROJETO_INTEGRADOR_CF3B5 }}
-          projectId: projeto-integrador-cf3b5
+          projectId: arcadius-language-8e1fa
