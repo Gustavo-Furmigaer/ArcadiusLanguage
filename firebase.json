@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/ecommerce-app",
+    "public": "dist/arcadius-language",
     "ignore": [
       "firebase.json",
       "**/.*",
