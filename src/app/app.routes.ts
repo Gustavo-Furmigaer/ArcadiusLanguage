@@ -60,5 +60,5 @@ export const routes: Routes = [
       component: LoginComponent},
     {path: 'register',
       component: RegisterComponent},
-  {path: '**', component: LoginComponent},
+  {path: '**', redirectTo: 'index', pathMatch: 'full' },
 ];
