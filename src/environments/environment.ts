@@ -1,11 +1,11 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyDAisk3qnShJbdyHUUT0627BXztkS3QkMI",
-    authDomain: "projeto-integrador-cf3b5.firebaseapp.com",
-    projectId: "projeto-integrador-cf3b5",
-    storageBucket: "projeto-integrador-cf3b5.appspot.com",
-    messagingSenderId: "461519297399",
-    appId: "1:461519297399:web:fe51fb13788ff1ca0d5f72"
+    apiKey: "AIzaSyChWmWbcDgu_NnV6_yv2ei1IEZintfMHto",
+    authDomain: "arcadius-language-8e1fa.firebaseapp.com",
+    projectId: "arcadius-language-8e1fa",
+    storageBucket: "arcadius-language-8e1fa.firebasestorage.app",
+    messagingSenderId: "645155703084",
+    appId: "1:645155703084:web:e7f4a60e63fd7752264489",
   }
 };
