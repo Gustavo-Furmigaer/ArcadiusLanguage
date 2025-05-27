@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  
 
   constructor(
     private authService: AuthService,
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) {
     this.registerForm = this.formBuilder.group({
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
@@ -41,12 +43,17 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
+    console.log('Formulário enviado:');
+    const { name, email, password } = this.registerForm.value;
+    await this.authService.register(email, password, name);
     if (this.registerForm.invalid) {
+      console.log('Formulário inválido');
       return;
     }
-
+    
     this.authService.register(
+      this.f['name'].value,
       this.f['email'].value,
       this.f['password'].value,
     )
@@ -57,3 +64,4 @@ export class RegisterComponent implements OnInit {
       .catch(error => console.error('Erro no registro', error));
   }
 }
+
