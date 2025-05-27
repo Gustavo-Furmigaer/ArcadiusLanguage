@@ -2,16 +2,30 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FirestoreService } from '../../core/services/firestore.service'; // ajuste o path
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
+import { User } from 'firebase/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-   isAdmin$ = new BehaviorSubject<boolean>(false); // valor inicial padrão
+  private userSubject = new BehaviorSubject<User | null>(null);
+  public user$ = this.userSubject.asObservable();
+
+  public isLoggedIn$ = this.user$.pipe(map(user => !!user));
+  isAdmin$ = new BehaviorSubject<boolean>(false); // valor inicial padrão
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: FirestoreService,
     private router: Router
   ) {}
+
+  async logout(): Promise<void> {
+      await this.afAuth.signOut();
+      this.userSubject.next(null);
+    }
+
+    getCurrentUser(): User | null {
+      return this.userSubject.value;
+    }
 
   async register(email: string, password: string, name:string): Promise<void> {
     try {
@@ -37,6 +51,7 @@ export class AuthService {
     if (!user) {
       throw new Error('Usuário não encontrado');
     }
+
 
     // (opcional) Redirecionamento aqui se preferir centralizar
 
