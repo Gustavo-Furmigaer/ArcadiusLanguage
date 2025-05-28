@@ -3,11 +3,12 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FirestoreService } from '../../core/services/firestore.service'; // ajuste o path
 import { Router } from '@angular/router';
 import { BehaviorSubject, map } from 'rxjs';
-import { User } from 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private userSubject = new BehaviorSubject<User | null>(null);
+  private userSubject = new BehaviorSubject<firebase.User | null>(null);
   public user$ = this.userSubject.asObservable();
 
   public isLoggedIn$ = this.user$.pipe(map(user => !!user));
@@ -16,7 +17,12 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private firestore: FirestoreService,
     private router: Router
-  ) {}
+  ) {
+    // Atualiza userSubject sempre que o estado de autenticação muda
+    this.afAuth.authState.subscribe(user => {
+      this.userSubject.next(user);
+    });
+  }
 
   async logout(): Promise<void> {
       await this.afAuth.signOut();
@@ -24,7 +30,7 @@ export class AuthService {
       this.router.navigate(['/']);
     }
 
-    getCurrentUser(): User | null {
+    getCurrentUser(): firebase.User | null {
       return this.userSubject.value;
     }
 
@@ -35,11 +41,13 @@ export class AuthService {
 
       if (uid) {
         // Salva dados adicionais no Firestore
-        await this.firestore.createDocument('usuarios', uid, {
+        await lastValueFrom(this.firestore.createDocument('usuarios', uid, {
           email,
           nome: name,
           criadoEm: new Date(),
-        }).toPromise(); // converte Observable para Promise
+        }));
+        // Redireciona para a aba de jogos
+        await this.router.navigate(['/jogos']); // converte Observable para Promise
       }
 
       this.router.navigate(['/jogos']); // redireciona após registrar
