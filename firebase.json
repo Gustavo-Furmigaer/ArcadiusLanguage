@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/arcadius-language",
+    "public": "dist/arcadius-language/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
