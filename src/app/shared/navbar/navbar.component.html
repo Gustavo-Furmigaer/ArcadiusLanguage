@@ -10,9 +10,16 @@
   </div>
 
   <!-- Se estiver logado -->
-  <div *ngIf="userLoggedIn">
-    <button (click)="logout()">
-      <img src="assets/user-icon.svg" alt="Usuário" width="30" />
-    </button>
+  <div *ngIf="userLoggedIn" class="user-menu">
+    <details>
+      <summary>
+        <img src="assets/user-icon.svg" alt="Usuário" width="30" />
+        <span>{{ userEmail }}</span>
+      </summary>
+      <ul>
+        <li><a routerLink="/perfil">Perfil</a></li>
+        <li><button (click)="logout()">Sair</button></li>
+      </ul>
+    </details>
   </div>
 </nav>
