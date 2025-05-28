@@ -21,6 +21,7 @@ export class AuthService {
   async logout(): Promise<void> {
       await this.afAuth.signOut();
       this.userSubject.next(null);
+      this.router.navigate(['/']);
     }
 
     getCurrentUser(): User | null {
@@ -36,14 +37,17 @@ export class AuthService {
         // Salva dados adicionais no Firestore
         await this.firestore.createDocument('usuarios', uid, {
           email,
+          nome: name,
           criadoEm: new Date(),
         }).toPromise(); // converte Observable para Promise
       }
+
+      this.router.navigate(['/jogos']); // redireciona após registrar
     } catch (error) {
       throw error;
     }
   }
-  async login(email: string, password: string): Promise<void> {
+  async login(email: string, password: string, name:string): Promise<void> {
   try {
     const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
     const user = userCredential.user;
@@ -52,9 +56,7 @@ export class AuthService {
       throw new Error('Usuário não encontrado');
     }
 
-
-    // (opcional) Redirecionamento aqui se preferir centralizar
-
+    this.router.navigate(['/jogos']); // redireciona após login
     // Se você quiser manter isAdmin$, precisará implementá-lo aqui
     // this.isAdmin$.next(true ou false);
   } catch (error) {

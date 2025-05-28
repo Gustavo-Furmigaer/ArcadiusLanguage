@@ -25,8 +25,6 @@
         <div *ngIf="registerForm.hasError('passwordMismatch')">As senhas não coincidem.</div>
       </div>
     </div>
-    <button type="submit" [disabled]="registerForm.invalid">Cadastrar</button>
-    
     <div class="form-group">
       <label for="name">Nome</label>
       <input type="text" id="name" formControlName="name" required>
@@ -34,6 +32,7 @@
         <div *ngIf="f['name'].errors?.['required']">Nome é obrigatório.</div>
       </div>
     </div>
+    <button type="submit" [disabled]="registerForm.invalid">Cadastrar</button>
   </form>
   <p>Já tem uma conta? <a routerLink="/login">Faça login</a></p>
 </div>
