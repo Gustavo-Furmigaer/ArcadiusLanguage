@@ -14,11 +14,13 @@ import { NgIf } from '@angular/common';
 export class NavbarComponent {
   userLoggedIn = false;
   userEmail: string | null = null;
+  initialized = false;
 
   constructor(private afAuth: AngularFireAuth, private router: Router) {
     this.afAuth.authState.subscribe(user => {
       this.userLoggedIn = !!user;
       this.userEmail = user ? user.email : null;
+      this.initialized = true;
     });
   }
 
