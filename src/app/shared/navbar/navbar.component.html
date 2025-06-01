@@ -14,9 +14,9 @@
     <!-- Se estiver logado -->
     <div *ngIf="userLoggedIn" class="user-menu">
       <details>
-        <button class="dropdown-toggle">
+        <summary>
           <img src="assets/iconelogado.jpg" alt="Usuário" width="30" height="30" />
-      </button>
+        </summary>
         <ul class="dropdown-menu">
           <li><a routerLink="/perfil">Perfil</a></li>
           <li><a routerLink="/configuracoes">Configurações</a></li>
