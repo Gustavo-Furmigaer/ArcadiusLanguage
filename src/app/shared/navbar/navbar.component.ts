@@ -21,7 +21,10 @@ export class NavbarComponent {
     this.afAuth.authState.subscribe(user => {
       this.userLoggedIn = !!user;
       this.userEmail = user ? user.email : null;
-      this.userPhotoUrl = user?.photoURL || 'assets/iconelogado.jpg';
+      const photoURL = user?.photoURL ?? '';
+      const isDefaultFirebasePhoto = photoURL.startsWith('data:image/svg+xml');
+
+      this.userPhotoUrl = isDefaultFirebasePhoto ? 'assets/iconelogado.jpg' : photoURL;;
       this.initialized = true;
     });
   }
