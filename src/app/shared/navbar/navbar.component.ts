@@ -21,10 +21,9 @@ export class NavbarComponent {
     this.afAuth.authState.subscribe(user => {
       this.userLoggedIn = !!user;
       this.userEmail = user ? user.email : null;
-      const photoURL = user?.photoURL ?? '';
-      const isDefaultFirebasePhoto = photoURL.startsWith('data:image/svg+xml');
-
-      this.userPhotoUrl = isDefaultFirebasePhoto ? 'assets/iconelogado.jpg' : photoURL;;
+      const rawPhoto = user?.photoURL ?? '';
+      const isSvg = rawPhoto.startsWith('data:image/svg+xml') || rawPhoto.endsWith('.svg') || rawPhoto.includes('googleusercontent.com') && rawPhoto.includes('default');
+      this.userPhotoUrl = !rawPhoto || isSvg ? 'assets/iconelogado.jpg' : rawPhoto;
       this.initialized = true;
     });
   }
