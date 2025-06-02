@@ -44,57 +44,49 @@ nav {
     }
 
       img {
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
         border: 2px solid white;
+      }
 
       &::-webkit-details-marker {
         display: none;
       }
     }
 
-    .dropdown {
-      position: relative;
-      display: inline-block;
+    details ul {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 10;
 
-      .dropdown-toggle {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-      }
-    
-      .dropdown-menu {
-        position: absolute;
-        right: 0;
-        background-color: #1e1e1e;
-        border: 1px solid #333;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        z-index: 10;
+      li {
+        list-style: none;
 
-        li {
-          list-style: none;
+        a,
+        button {
+          color: white;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 0.9rem;
+          text-align: left;
+          width: 100%;
 
-          a,
-          button {
-            color: white;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            text-align: left;
-            width: 100%;
-
-            &:hover {
-              color: #1db954;
-            }
+          &:hover {
+            color: #1db954;
           }
-        }
+      }
       }
     }
+  
   }
-}
 }
