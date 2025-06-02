@@ -23,7 +23,7 @@ export class NavbarComponent {
       this.userEmail = user ? user.email : null;
       const rawPhoto = user?.photoURL ?? '';
       const isSvg = rawPhoto.startsWith('data:image/svg+xml') || rawPhoto.endsWith('.svg') || rawPhoto.includes('googleusercontent.com') && rawPhoto.includes('default');
-      this.userPhotoUrl = 'assets/iconelogado.jpg';
+      this.userPhotoUrl = !rawPhoto || isSvg ? 'assets/iconelogado.jpg' : rawPhoto;
       this.initialized = true;
     });
   }
