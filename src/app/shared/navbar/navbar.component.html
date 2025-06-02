@@ -15,7 +15,7 @@
     <div *ngIf="userLoggedIn" class="user-menu">
       <details>
         <summary>
-          <img src="assets/iconelogado.jpg" alt="Usuário" />
+          <img [src]="userPhotoUrl" alt="Usuário" />
           <span>{{ userEmail }}</span>
         </summary>
         <ul>
