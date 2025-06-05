@@ -4,9 +4,7 @@
   <div *ngIf="initialized">
     <!-- Se não estiver logado -->
     <div *ngIf="!userLoggedIn">
-      <ul>
-        <li><a routerLink="/admin/language-management" routerLinkActive="active">Gerenciar Idiomas</a></li>
-        <li><a routerLink="/admin/games-management">Gerenciar Jogos</a></li>
+      <ul> 
       </ul>
     </div>
 
@@ -16,6 +14,8 @@
         <summary>
         </summary>
         <ul>
+          <li><a routerLink="/admin/language-management" routerLinkActive="active">Gerenciar Idiomas</a></li>
+          <li><a routerLink="/admin/games-management">Gerenciar Jogos</a></li>
         </ul>
       </details>
     </div>
