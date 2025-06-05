@@ -5,11 +5,12 @@ import { AuthService } from './auth/services/auth.service';
 import { Router } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { SpeechToggleComponent } from './features/speech-toggle/speech-toggle.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, SpeechToggleComponent],
+  imports: [NavbarComponent, RouterOutlet, HeaderComponent, SpeechToggleComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

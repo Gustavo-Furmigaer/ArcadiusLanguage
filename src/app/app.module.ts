@@ -19,6 +19,7 @@ import { environment } from '../environments/environment';
     //AppComponent,
     //LoginComponent,
     //RegisterComponent,
+    //NavbarComponent,
     // ... outros componentes
   ],
   imports: [
