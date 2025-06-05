@@ -18,24 +18,27 @@ export class NavbarComponent {
   initialized = false;
 
   constructor(private afAuth: AngularFireAuth, private router: Router) {
-    this.afAuth.authState.subscribe(user => {
-      this.userLoggedIn = !!user;
-      this.userEmail = user ? user.email : null;
-      const rawPhoto = user?.photoURL ?? '';
-      const isSvg = rawPhoto.startsWith('data:image/svg+xml') || rawPhoto.endsWith('.svg');
-      const isGoogleDefault = rawPhoto.includes('googleusercontent.com') && rawPhoto.includes('default');
+  console.log('NavbarComponent inicializado');
 
-      this.userPhotoUrl = (!rawPhoto || isSvg || isGoogleDefault)
-        ? 'assets/iconelogado.jpg'
-        : rawPhoto;
-      
-      console.log('User:', user);
-      console.log('photoURL:', user?.photoURL);
-      console.log('Final userPhotoUrl:', this.userPhotoUrl);
+  this.afAuth.authState.subscribe(user => {
+    console.log('User:', user);
 
-      this.initialized = true;
-    });
-  }
+    this.userLoggedIn = !!user;
+    this.userEmail = user ? user.email : null;
+
+    const rawPhoto = user?.photoURL ?? '';
+    const isSvg = rawPhoto.startsWith('data:image/svg+xml') || rawPhoto.endsWith('.svg');
+    const isGoogleDefault = rawPhoto.includes('googleusercontent.com') && rawPhoto.includes('default');
+
+    this.userPhotoUrl = (!rawPhoto || isSvg || isGoogleDefault)
+      ? 'assets/iconelogado.jpg'
+      : rawPhoto;
+
+    console.log('Final userPhotoUrl:', this.userPhotoUrl);
+
+    this.initialized = true;
+  });
+}
 
   logout() {
     this.afAuth.signOut().then(() => {
