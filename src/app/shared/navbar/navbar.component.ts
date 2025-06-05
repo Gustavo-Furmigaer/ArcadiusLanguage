@@ -22,8 +22,17 @@ export class NavbarComponent {
       this.userLoggedIn = !!user;
       this.userEmail = user ? user.email : null;
       const rawPhoto = user?.photoURL ?? '';
-      const isSvg = rawPhoto.startsWith('data:image/svg+xml') || rawPhoto.endsWith('.svg') || rawPhoto.includes('googleusercontent.com') && rawPhoto.includes('default');
-      this.userPhotoUrl = !rawPhoto || isSvg ? 'assets/iconelogado.jpg' : rawPhoto;
+      const isSvg = rawPhoto.startsWith('data:image/svg+xml') || rawPhoto.endsWith('.svg');
+      const isGoogleDefault = rawPhoto.includes('googleusercontent.com') && rawPhoto.includes('default');
+
+      this.userPhotoUrl = (!rawPhoto || isSvg || isGoogleDefault)
+        ? 'assets/iconelogado.jpg'
+        : rawPhoto;
+      
+      console.log('User:', user);
+      console.log('photoURL:', user?.photoURL);
+      console.log('Final userPhotoUrl:', this.userPhotoUrl);
+
       this.initialized = true;
     });
   }
