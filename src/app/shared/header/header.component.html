@@ -17,9 +17,16 @@
     </ul>
     <div class="auth-actions">
       <ng-container *ngIf="isLoggedIn$ | async; else loginRegister">
-        <button (click)="logout()" class="logout-btn">
-          <i class="fas fa-sign-out-alt"></i> Sair
-        </button>
+         <details class="user-dropdown">
+          <summary>
+            <img [src]="userPhotoUrl" class="user-avatar" alt="Usuário" />
+            <span>{{ userEmail }}</span>
+          </summary>
+          <ul>
+            <li><a routerLink="/perfil">Perfil</a></li>
+            <li><button (click)="logout()">Sair</button></li>
+          </ul>
+        </details>
       </ng-container>
       <ng-template #loginRegister>
         <a routerLink="/login" class="login-btn">
