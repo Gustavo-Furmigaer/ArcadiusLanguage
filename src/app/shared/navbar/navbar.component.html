@@ -15,13 +15,8 @@
     <div *ngIf="userLoggedIn" class="user-menu">
       <details>
         <summary>
-          <img [src]="userPhotoUrl" alt="Usuário" class="user-avatar" />
-          <span>{{ userEmail }}</span>
         </summary>
         <ul>
-          <li><a routerLink="/perfil">Perfil</a></li>
-          <li><a routerLink="/configuracoes">Configurações</a></li>
-          <li><button (click)="logout()">Sair</button></li>
         </ul>
       </details>
     </div>
