@@ -31,7 +31,7 @@ export class NavbarComponent {
     const isGoogleDefault = rawPhoto.includes('googleusercontent.com') && rawPhoto.includes('default');
 
     this.userPhotoUrl = (!rawPhoto || isSvg || isGoogleDefault)
-      ? 'assets/iconelogado.jpg'
+      ? 'assets/iconelogado2.jpg'
       : rawPhoto;
 
     console.log('Final userPhotoUrl:', this.userPhotoUrl);
