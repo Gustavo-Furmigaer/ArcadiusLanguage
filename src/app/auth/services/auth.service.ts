@@ -11,9 +11,8 @@ import { lastValueFrom } from 'rxjs';
 export class AuthService {
   private userSubject = new BehaviorSubject<firebase.User | null>(null);
   public user$ = this.userSubject.asObservable();
-
   public isLoggedIn$ = this.user$.pipe(map(user => !!user));
-  isAdmin$ = new BehaviorSubject<boolean>(false); // valor inicial padrão
+  public isAdmin$ = new BehaviorSubject<boolean>(false); // valor inicial padrão
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -21,8 +20,28 @@ export class AuthService {
     private firestoreService: FirestoreService,
     private router: Router
   ) {
-    this.afAuth.authState.subscribe(user => {
+    this.listenToAuthChanges();
+  }
+
+  private listenToAuthChanges() {
+    this.afAuth.onAuthStateChanged(async (user) => {
       this.userSubject.next(user);
+
+      if (user) {
+        const userDocRef = doc(this.firestore, 'usuarios', user.uid);
+        const docSnap = await getDoc(userDocRef);
+
+        if (docSnap.exists()) {
+          const userSnap = docSnap.data();
+          const isAdmin = (userSnap as any)?.isAdmin === true || (userSnap as any)?.admin === true;
+          this.isAdmin$.next(isAdmin);
+          console.log('[AuthService] Estado restaurado: isAdmin =', isAdmin);
+        } else {
+          this.isAdmin$.next(false);
+        }
+      } else {
+        this.isAdmin$.next(false);
+      }
     });
   }
 
