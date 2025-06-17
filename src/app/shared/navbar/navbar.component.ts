@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { NgIf } from '@angular/common';
+import { AuthService } from '../../auth/services/auth.service';
+import { Observable } from 'rxjs';
+
 
 
 @Component({
@@ -14,11 +17,14 @@ import { NgIf } from '@angular/common';
 export class NavbarComponent {
   userLoggedIn = false;
   userEmail: string | null = null;
-  userPhotoUrl: string = 'assets/iconelogado.jpg';
+  userPhotoUrl: string = 'assets/iconelogado2.jpg';
   initialized = false;
+  isAdmin$: Observable<boolean>;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) {
+  constructor(private afAuth: AngularFireAuth, private authService: AuthService, private router: Router) {
   console.log('NavbarComponent inicializado');
+
+  this.isAdmin$ = this.authService.isAdmin$;
 
   this.afAuth.authState.subscribe(user => {
     console.log('User:', user);

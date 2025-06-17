@@ -1,5 +1,12 @@
 <div class="admin-container">
   <h1>Painel de Administração</h1>
-  <app-navbar></app-navbar>
+
+  <nav class="admin-nav">
+    <ul>
+      <li><button [routerLink]="['/admin/games-management']">Gerenciar Jogos</button></li>
+      <li><button [routerLink]="['/admin/language-management']">Gerenciar Idiomas</button></li>
+    </ul>
+  </nav>
+  
   <router-outlet></router-outlet>
 </div>

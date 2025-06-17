@@ -25,14 +25,16 @@ export const routes: Routes = [
         },
         {
           path: 'games-management',
-          component: GameManagementComponent,
+          loadComponent: () =>
+            import('./features/game-management/game-management.component').then(m => m.GameManagementComponent),
         },
         {
           path: 'language-management',
-          component: LanguageManagementComponent,
+          loadComponent: () =>
+            import('./features/language-management/language-management.component').then(m => m.LanguageManagementComponent),
         },
       ]
-     },
+    },
     {path: 'index',
       component: MainComponent,
     children: [

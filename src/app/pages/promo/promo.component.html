@@ -2,7 +2,7 @@
   <section class="main-promo" *ngIf="featuredPromo$ | async as featuredPromo">
     <div class="promo-content">
       <h1>Oferta Especial: {{ featuredPromo.name }}</h1>
-      <p>Aprenda {{ featuredPromo.language.name }} jogando {{ featuredPromo.name }}!</p>
+      <p *ngIf="featuredPromo.language">Aprenda {{ featuredPromo.language.name }} jogando {{ featuredPromo.name }}!</p>
       <ul>
         <li>Acesso premium aos servidores de aprendizado</li>
         <li>Tutoriais exclusivos de vocabulário de {{ featuredPromo.genre }}</li>
@@ -22,7 +22,8 @@
     <div class="promo-carousel">
       <div class="promo-item" *ngFor="let promo of otherPromos$ | async">
         <img [src]="promo.img" [alt]="promo.alt">
-        <h3>{{ promo.name }} + {{ promo.language.name }}</h3>
+        <h3 *ngIf="promo.language">{{ promo.name }} + {{ promo.language.name }}</h3>
+        <h3 *ngIf="!promo.language">{{ promo.name }}</h3>
         <p>{{ promo.description }}</p>
         <div class="promo-details">
 

@@ -76,13 +76,18 @@ export class GameManagementComponent implements OnInit {
   }
 
   editGame(game: Game): void {
+    console.log(game);
     this.editMode = true;
     this.currentGameId = game.id;
     this.gameForm.patchValue({
-      ...game,
-      languageId: game.language.id
-    });
-  }
+      name: game.name,
+      genre: game.genre,
+      img: game.img,
+      alt: game.alt,
+      description: game.description,
+      languageId: game.language || ''
+  });
+}
 
   resetForm(): void {
     this.editMode = false;

@@ -17,7 +17,7 @@
     </ul>
     <div class="auth-actions">
       <ng-container *ngIf="isLoggedIn$ | async; else loginRegister">
-         <details class="user-dropdown">
+        <details class="user-dropdown">
           <summary>
             <img [src]="userPhotoUrl" class="user-avatar" alt="Usuário" />
             <span>{{ userEmail }}</span>

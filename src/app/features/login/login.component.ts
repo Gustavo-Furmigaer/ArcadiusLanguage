@@ -28,23 +28,41 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  debugClick() {
+    console.log('[LoginComponent] Botão clicado!');
+  }
+
+
   get f() { return this.loginForm.controls; }
 
-  onSubmit() {
+  async onSubmit() {
+    console.log('[LoginComponent] onSubmit chamado');
+
     if (this.loginForm.invalid) {
+      console.warn('Formulário inválido. Verifique os campos.');
+      console.log('Erros no campo Email:', this.loginForm.get('email')?.errors);
+      console.log('Erros no campo Senha:', this.loginForm.get('password')?.errors);
       return;
     }
-
-    this.authService.login(this.f['email'].value, this.f['password'].value)
-      .then(() => {
-        this.authService.isAdmin$.pipe(take(1)).subscribe(isAdmin => {
-          if (isAdmin) {
-            this.router.navigate(['/admin']);
-          } else {
-            this.router.navigate(['/index/games']);
-          }
-        });
-      })
-      .catch(error => console.error('Erro no login', error));
+    
+     // 2. Se o código chegou até aqui, o formulário é VÁLIDO.
+    console.log('Formulário válido. Enviando para o serviço de login...');
+    console.log('Valores:', this.loginForm.value); // Ótimo para depurar os valores enviados
+    
+    try {
+      const isAdmin = await this.authService.login(this.f['email'].value, this.f['password'].value);
+      console.log('[LoginComponent] isAdmin retornado:', isAdmin);
+      
+      if (isAdmin) {
+        console.log('Redirecionando para /admin');
+        this.router.navigate(['/admin']);
+      } else {
+        console.log('Redirecionando para /index/games');
+        this.router.navigateByUrl('/index/games');
+      }
+    } catch (error) {
+    console.error('Erro no login', error);
+    }
   }
 }
+

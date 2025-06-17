@@ -23,6 +23,11 @@
 
   <ul>
     <li *ngFor="let language of languages$ | async">
+      <img
+        [src]="language.flag"
+        alt="{{ language.name }} Bandeira"
+        class="flag-img"
+      >
       {{ language.name }}
       <button (click)="editLanguage(language)">Editar</button>
       <button (click)="deleteLanguage(language.id!)">Excluir</button>

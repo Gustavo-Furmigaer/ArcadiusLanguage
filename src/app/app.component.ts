@@ -1,6 +1,6 @@
 import { MockDataInsertion } from './core/services/mock-data.service';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from './auth/services/auth.service';
 import { Router } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
@@ -10,7 +10,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NavbarComponent, RouterOutlet, HeaderComponent, SpeechToggleComponent],
+  imports: [NavbarComponent, RouterOutlet, HeaderComponent, SpeechToggleComponent, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FirestoreService } from '../../core/services/firestore.service';
 import { Router } from '@angular/router';
+import { Firestore, doc, docData, getDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, map } from 'rxjs';
 import firebase from 'firebase/compat/app';
 import { lastValueFrom } from 'rxjs';
@@ -16,7 +17,8 @@ export class AuthService {
 
   constructor(
     private afAuth: AngularFireAuth,
-    private firestore: FirestoreService,
+    private firestore: Firestore,
+    private firestoreService: FirestoreService,
     private router: Router
   ) {
     this.afAuth.authState.subscribe(user => {
@@ -40,10 +42,11 @@ export class AuthService {
       const uid = userCredential.user?.uid;
 
       if (uid) {
-        await lastValueFrom(this.firestore.createDocument('usuarios', uid, {
+        await lastValueFrom(this.firestoreService.createDocument('usuarios', uid, {
           email,
           nome: name,
           criadoEm: new Date(),
+          admin: false
         }));
         await this.router.navigate(['/jogos']);
       }
@@ -54,18 +57,34 @@ export class AuthService {
     }
   }
 
-  async login(email: string, password: string): Promise<void> {
+  async login(email: string, password: string): Promise<boolean> {
+    console.log('[AuthService] Iniciando login...');
     try {
       const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
+      console.log('[AuthService] Login Firebase OK');
       const user = userCredential.user;
+      if (!user) throw new Error('Usuário não encontrado');
 
-      if (!user) {
-        throw new Error('Usuário não encontrado');
+      console.log('[AuthService] Buscando documento do Firestore para UID:', user.uid);
+
+      const userDocRef = doc(this.firestore, 'usuarios', user.uid);
+      const docSnap = await getDoc(userDocRef);
+
+      if (!docSnap.exists()) {
+        throw new Error('[AuthService] Documento do usuário não existe!');
       }
 
-      this.router.navigate(['/jogos']);
-      // Ex: this.isAdmin$.next(true ou false);
+      const userSnap = docSnap.data();
+      console.log('[AuthService] Documento Firestore carregado:', userSnap);
+
+      const isAdmin = (userSnap as any)?.isAdmin === true || (userSnap as any)?.admin === true;
+      this.isAdmin$.next(isAdmin);
+      this.userSubject.next(user);
+      console.log('[AuthService] isAdmin:', isAdmin);
+
+      return isAdmin;
     } catch (error) {
+      console.error('[AuthService] Erro no login:', error);
       throw error;
     }
   }

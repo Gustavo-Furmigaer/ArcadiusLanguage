@@ -4,16 +4,18 @@
   <div class="game-list">
     <div class="game-card" *ngFor="let game of games$ | async">
       <div class="game-image">
-        <img [src]="game.img" [alt]="game.alt">
+        <img [src]="game.img" [alt]="game.alt" class="game-img">
       </div>
       <div class="game-info">
         <h2>{{ game.name }}</h2>
         <p class="game-genre">{{ game.genre }}</p>
-        <p class="game-language">
-          <span class="language-flag">{{ game.language.flag }}</span>
-          {{ game.language.name }}
-        </p>
-        <p class="game-description">{{ game.description }}</p>
+      <p class="game-language" *ngIf="game.language">
+        <span class="language-flag">
+          <img [src]="game.language.flag" [alt]="game.language.name" style="width: 20px; height: 14px; object-fit: cover;" />
+        </span>
+        {{ game.language.name }}
+      </p>
+      <p class="game-description">{{ game.description }}</p>
       </div>
     </div>
   </div>
