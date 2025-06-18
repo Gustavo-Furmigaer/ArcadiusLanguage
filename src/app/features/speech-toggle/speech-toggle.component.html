@@ -1,7 +1,45 @@
-<button
-  (click)="toggleSpeech()"
-  [ngClass]="{ 'active': isSpeechEnabled, 'inactive': !isSpeechEnabled }"
-  aria-label="Ativar ou desativar descrição falada"
->
-  <i class="fas fa-universal-access"></i>
-</button>
+<div class="speech-toggle-wrapper"
+  (mouseenter)="showControls()"
+  (mouseleave)="hideControlsWithDelay()">
+  
+  <button
+    role="button"
+    [attr.aria-pressed]="isSpeechEnabled"
+    (click)="toggleSpeech()"
+    (mouseenter)="announceHover()"
+    (mouseleave)="stopHover()"
+    [ngClass]="{ 'active': isSpeechEnabled, 'inactive': !isSpeechEnabled }"
+    aria-label="Ativar ou desativar descrição falada"
+    title="Ativar/Desativar Descrição Falada"
+  >
+    <i class="fas fa-universal-access"></i>
+  </button>
+
+  <!-- Painel de controles de voz -->
+  <div class="voice-controls"
+    *ngIf="showVoiceControls"
+    (mouseenter)="showControls()"
+    (mouseleave)="hideControlsWithDelay()">
+    
+    <label>
+      Voz:
+      <select [(ngModel)]="selectedVoiceName" (change)="updateVoices()">
+        <option *ngFor="let voice of allVoices" [value]="voice.name">{{ voice.name }}</option>
+      </select>
+    </label>
+
+    <label>
+      Velocidade:
+      <input type="range" min="0.5" max="2" step="0.1" [(ngModel)]="rate" /> {{ rate }}
+    </label>
+
+    <label>
+      Tom:
+      <input type="range" min="0" max="2" step="0.1" [(ngModel)]="pitch" /> {{ pitch }}
+    </label>
+  </div>
+</div>
+
+<div aria-live="polite" class="sr-only">
+  {{ isSpeechEnabled ? 'Descrição falada ativada' : 'Descrição falada desativada' }}
+</div>

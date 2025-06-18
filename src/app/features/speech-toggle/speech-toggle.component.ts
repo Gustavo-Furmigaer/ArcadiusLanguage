@@ -1,50 +1,83 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AccessibilityService } from '../../core/services/accessibility.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-speech-toggle',
   standalone: true,
-  imports: [ CommonModule ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './speech-toggle.component.html',
   styleUrls: ['./speech-toggle.component.scss']
 })
-export class SpeechToggleComponent {
+export class SpeechToggleComponent implements OnInit {
   isSpeechEnabled: boolean = true;
+  allVoices: SpeechSynthesisVoice[] = [];
+  selectedVoiceName: string | null = null;
+  rate: number = 1.3;
+  pitch: number = 1.2;
+  showVoiceControls: boolean = false;
+  private hideTimeout: any;
 
   constructor(private accessibilityService: AccessibilityService) {}
 
+  ngOnInit() {
+    const stored = localStorage.getItem('speechEnabled');
+    this.isSpeechEnabled = stored !== null ? JSON.parse(stored) : true;
+
+    const loadVoices = () => {
+      this.allVoices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('pt'));
+      if (!this.selectedVoiceName && this.allVoices.length) {
+        const maria = this.allVoices.find(v => v.name.toLowerCase().includes('maria'));
+        this.selectedVoiceName = maria ? maria.name : this.allVoices[0].name;
+      }
+    };
+
+    speechSynthesis.onvoiceschanged = loadVoices;
+    loadVoices();
+  }
+
   toggleSpeech() {
-    // 1️⃣ Inverte o estado
     this.isSpeechEnabled = !this.isSpeechEnabled;
+    localStorage.setItem('speechEnabled', JSON.stringify(this.isSpeechEnabled));
+    this.accessibilityService.toggleSpeech(this.isSpeechEnabled);
+  }
 
-    // 2️⃣ DEBUG: log no console + fala direta em pt-BR usando voz Microsoft (ou fallback)
-    console.log('toggleSpeech chamado – isSpeechEnabled:', this.isSpeechEnabled);
+  announceHover() {
+    if (!this.isSpeechEnabled) return;
+    const description = this.isSpeechEnabled
+      ? 'Clique para desativar a descrição falada'
+      : 'Clique para ativar a descrição falada';
+    this.speak(description);
+  }
 
-    const text = this.isSpeechEnabled
-      ? 'Descrição ativada'
-      : 'Descrição desativada';
+  stopHover() {
+    speechSynthesis.cancel();
+  }
 
+  updateVoices() {
+    localStorage.setItem('selectedVoice', this.selectedVoiceName!);
+  }
+
+  private speak(text: string) {
+    speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = 'pt-BR';
-
-    // 3️⃣ Seleciona a voz da Microsoft (Maria) ou fallback para qualquer pt-BR
-    const voices = speechSynthesis.getVoices();
-    const msVoice = voices.find(v =>
-      v.lang === 'pt-BR' &&
-      v.name.toLowerCase().includes('maria')
-    );
-    const fallbackVoice = voices.find(v => v.lang === 'pt-BR') || null;
-    utter.voice = msVoice ?? fallbackVoice;
-
-    // 4️⃣ Ajustes para fluidez
-    utter.rate = 1.3;   // um pouco mais rápido
-    utter.pitch = 1.2;  // tom mais natural
-
-    // 5️⃣ Dispara a fala
+    utter.rate = this.rate;
+    utter.pitch = this.pitch;
+    const voice = this.allVoices.find(v => v.name === this.selectedVoiceName);
+    utter.voice = voice || null;
     speechSynthesis.speak(utter);
+  }
 
-    // 6️⃣ Chamada real ao seu serviço
-    this.accessibilityService.toggleSpeech(this.isSpeechEnabled);
+  showControls() {
+    clearTimeout(this.hideTimeout);
+    this.showVoiceControls = true;
+  }
+
+  hideControlsWithDelay() {
+    this.hideTimeout = setTimeout(() => {
+      this.showVoiceControls = false;
+    }, 2000); // 2 segundos
   }
 }
