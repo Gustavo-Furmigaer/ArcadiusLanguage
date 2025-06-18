@@ -1,4 +1,7 @@
-<label>
-  <input type="checkbox" [checked]="isSpeechEnabled" (change)="toggleSpeech()">
-  Ativar Descrição Falada
-</label>
+<button
+  (click)="toggleSpeech()"
+  [ngClass]="{ 'active': isSpeechEnabled, 'inactive': !isSpeechEnabled }"
+  aria-label="Ativar ou desativar descrição falada"
+>
+  <i class="fas fa-universal-access"></i>
+</button>
