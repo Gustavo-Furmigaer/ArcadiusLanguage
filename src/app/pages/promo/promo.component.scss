@@ -1,0 +1,224 @@
+.promo-page {
+  padding: 2rem;
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.main-promo {
+  display: flex;
+  background-color: #1e1e1e;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.promo-content {
+  flex: 1;
+  padding: 2rem;
+
+  h1 {
+    color: #1db954;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    margin-bottom: 1rem;
+    list-style-type: none;
+    padding-left: 0;
+
+    li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+
+      &:before {
+        content: '✓';
+        color: #1db954;
+        position: absolute;
+        left: 0;
+      }
+    }
+  }
+
+  .promo-price {
+    margin-bottom: 1rem;
+
+    .original-price {
+      text-decoration: line-through;
+      color: #b3b3b3;
+      margin-right: 1rem;
+    }
+
+    .discounted-price {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #1db954;
+    }
+  }
+
+  .cta-button {
+    background-color: #1db954;
+    color: #121212;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: #1ed760;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.promo-image {
+  width: 50%;
+  height: 50%;
+  object-fit: cover;
+}
+
+.secondary-promos {
+  h2 {
+    color: #1db954;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.promo-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #1e1e1e;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #1db954;
+    border-radius: 20px;
+  }
+}
+
+.promo-item {
+  flex: 0 0 250px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  h3 {
+    padding: 1rem 1rem 0.5rem;
+    color: #ffffff;
+  }
+
+  p {
+    padding: 0 1rem 0.5rem;
+    font-size: 0.9rem;
+    color: #b3b3b3;
+  }
+
+  .promo-price {
+    display: block;
+    padding: 0 1rem 1rem;
+    font-weight: bold;
+    color: #1db954;
+  }
+}
+
+.language-flag {
+  width: 30px;
+  height: 20px;
+  margin: 1rem;
+  overflow: hidden;
+  border-radius: 4px;
+
+  .flag-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.review-button {
+  padding: 8px 16px;
+  background: #1db954;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.review-button:hover {
+  background: #1ed760;
+}
+
+.promo-details {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  .promo-price {
+    font-size: 1.2rem;
+    padding: 0;
+  }
+
+  app-review-list {
+    width: 100%;
+
+    ::ng-deep .reviews-container {
+      padding: 10px;
+
+      .reviews-summary {
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .reviews-list {
+        max-height: 200px;
+        overflow-y: auto;
+        padding-right: 5px;
+
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: #2a2a2a;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: #1db954;
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+
+  .review-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

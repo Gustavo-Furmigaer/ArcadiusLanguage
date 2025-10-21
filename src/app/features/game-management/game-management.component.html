@@ -1,0 +1,26 @@
+<div class="game-management">
+  <h1>Gerenciar Jogos</h1>
+  <form [formGroup]="gameForm" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="name" placeholder="Nome do Jogo" required>
+    <input type="text" formControlName="genre" placeholder="Gênero" required>
+    <input type="text" formControlName="img" placeholder="URL da Imagem" required>
+    <input type="text" formControlName="alt" placeholder="Texto Alternativo" required>
+    <textarea formControlName="description" placeholder="Descrição" required></textarea>
+    <select formControlName="languageId" required>
+      <option value="">Selecione um idioma</option>
+      <option *ngFor="let language of languages$ | async" [value]="language.id">
+        {{ language.name }}
+      </option>
+    </select>
+    <button [disabled]="gameForm.invalid" type="submit">{{ editMode ? 'Atualizar' : 'Adicionar' }} Jogo</button>
+    <button type="button" *ngIf="editMode" (click)="resetForm()">Cancelar</button>
+  </form>
+
+  <ul>
+    <li *ngFor="let game of games$ | async">
+      {{ game.name }} - {{ game.genre }}
+      <button (click)="editGame(game)">Editar</button>
+      <button (click)="deleteGame(game.id)">Excluir</button>
+    </li>
+  </ul>
+</div>

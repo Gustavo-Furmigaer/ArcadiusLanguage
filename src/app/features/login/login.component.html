@@ -1,0 +1,26 @@
+<div class="login-container">
+  <h2>Login</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" required>
+      <div *ngIf="(f['email'].touched && (f['email'].invalid || submitted))" class="error-message">
+        <div *ngIf="f['email'].errors?.['required']">Email é obrigatório.</div>
+        <div *ngIf="f['email'].errors?.['email']">Email inválido.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input type="password" id="password" formControlName="password" required>
+      <div *ngIf="(f['password'].touched && (f['password'].invalid || submitted))" class="error-message">
+        <div *ngIf="f['password'].errors?.['required']">Senha é obrigatória.</div>
+        <div *ngIf="f['password'].errors?.['minlength']">A senha deve ter pelo menos 6 caracteres.</div>
+      </div>
+    </div>
+    <div *ngIf="authError" class="auth-error">
+      {{ authError }}
+    </div>
+    <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+  </form>
+  <p>Não tem uma conta? <a routerLink="/register">Cadastre-se</a></p>
+</div>

@@ -1,0 +1,146 @@
+:host {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.language-management {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1db954;
+}
+
+form {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.flag-img {
+  width: 60px;      // largura razoável para bandeiras
+  height: auto;     // mantém proporção original
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  margin-right: 1rem;
+  vertical-align: middle;
+}
+
+
+input, textarea, select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #333;
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border-radius: 5px;
+  margin-bottom:  1rem;
+
+
+  &:focus {
+    outline: none;
+    border-color: #1db954;
+  }
+}
+
+.curiosities-container {
+  margin-top: 1rem;
+}
+
+.curiosity-item {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  input {
+    flex-grow: 1;
+  }
+}
+
+button {
+  background-color: #1db954;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-bottom:  1rem;
+  margin-right: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1ed760;
+  }
+
+  &:disabled {
+    background-color: #333;
+    cursor: not-allowed;
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.language-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.language-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-btn {
+  background-color: #1db954;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+}
+
+.cancel-btn {
+  background-color: #7f8c8d;
+}

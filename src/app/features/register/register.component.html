@@ -1,0 +1,45 @@
+<div class="register-container">
+  <h2>Cadastro</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" required>
+      <div *ngIf="f['email'].touched && f['email'].invalid" class="error-message">
+        <div *ngIf="f['email'].errors?.['required']">Email é obrigatório.</div>
+        <div *ngIf="f['email'].errors?.['pattern']">Email inválido.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input type="password" id="password" formControlName="password" required>
+      <div *ngIf="f['password'].touched && f['password'].invalid" class="error-message">
+        <div *ngFor="let msg of passwordErrors">{{ msg }}</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirmar Senha</label>
+      <input type="password" id="confirmPassword" formControlName="confirmPassword" required>
+      <div *ngIf="f['confirmPassword'].touched && (f['confirmPassword'].invalid || registerForm.hasError('passwordMismatch'))" class="error-message">
+        <div *ngIf="f['confirmPassword'].errors?.['required']">Confirmação de senha é obrigatória.</div>
+        <div *ngIf="registerForm.hasError('passwordMismatch')">As senhas não coincidem.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Nome</label>
+      <input type="text" id="name" formControlName="name" required>
+      <div *ngIf="f['name'].touched && f['name'].invalid" class="error-message">
+        <div *ngIf="f['name'].errors?.['required']">Nome é obrigatório.</div>
+      </div>
+    </div>
+
+    <div class="g-recaptcha"
+      data-sitekey="6Lc3jNErAAAAAKCra6WU7YDdpi3YKn_0MmPpY8Mj">
+    </div>
+    <button type="submit" [disabled]="registerForm.invalid">Cadastrar</button>
+  </form>
+  <p>Já tem uma conta? <a routerLink="/login">Faça login</a></p>
+</div>
+

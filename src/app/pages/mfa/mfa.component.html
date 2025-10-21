@@ -1,0 +1,20 @@
+<div class="mfa-container">
+  <h2>Verificação em Duas Etapas</h2>
+  <p>Digite o código enviado para o seu e-mail.</p>
+
+  <input
+    type="text"
+    [(ngModel)]="userCode"
+    placeholder="Digite o código"
+    maxlength="6"
+  />
+
+  <button (click)="verify()">Verificar</button>
+
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+  <hr />
+  <p style="opacity: 0.6">
+    <strong>Código:</strong> {{ otpVisible }}
+  </p>
+</div>

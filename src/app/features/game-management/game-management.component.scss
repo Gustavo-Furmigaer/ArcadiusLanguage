@@ -1,0 +1,92 @@
+:host {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.game-management {
+  padding: 2rem;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1db954;
+}
+
+form {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #333;
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border-radius: 5px;
+
+  &:focus {
+    outline: none;
+    border-color: #1db954;
+  }
+}
+
+button {
+  background-color: #1db954;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1ed760;
+  }
+
+  &:disabled {
+    background-color: #333;
+    cursor: not-allowed;
+  }
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.game-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-btn {
+  background-color: #1db954;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+}
+

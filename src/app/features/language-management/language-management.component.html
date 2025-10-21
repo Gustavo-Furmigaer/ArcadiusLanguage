@@ -1,0 +1,36 @@
+<div class="language-management">
+  <h1>Gerenciar Idiomas</h1>
+  <form [formGroup]="languageForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Nome do Idioma</label>
+      <input id="name" type="text" formControlName="name" placeholder="Nome do Idioma" required>
+    </div>
+    <div>
+      <label for="flag">URL da Bandeira</label>
+      <input id="flag" type="text" formControlName="flag" placeholder="URL da Bandeira" required>
+    </div>
+    <div formArrayName="culturalCuriosities">
+      <h3>Curiosidades Culturais</h3>
+      <div *ngFor="let curiosity of culturalCuriosities.controls; let i = index">
+        <input [formControlName]="i" placeholder="Curiosidade {{i + 1}}">
+        <button type="button" (click)="removeCuriosity(i)">Remover</button>
+      </div>
+      <button type="button" (click)="addCuriosity()">Adicionar Curiosidade</button>
+    </div>
+    <button type="submit" [disabled]="languageForm.invalid">{{ editMode ? 'Atualizar' : 'Adicionar' }} Idioma</button>
+    <button type="button" *ngIf="editMode" (click)="resetForm()">Cancelar</button>
+  </form>
+
+  <ul>
+    <li *ngFor="let language of languages$ | async">
+      <img
+        [src]="language.flag"
+        alt="{{ language.name }} Bandeira"
+        class="flag-img"
+      >
+      {{ language.name }}
+      <button (click)="editLanguage(language)">Editar</button>
+      <button (click)="deleteLanguage(language.id!)">Excluir</button>
+    </li>
+  </ul>
+</div>

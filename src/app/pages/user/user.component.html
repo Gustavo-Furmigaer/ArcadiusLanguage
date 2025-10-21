@@ -1,0 +1,71 @@
+<div class="profile-container">
+    <h2>Meu Perfil</h2>
+
+    <div class="profile-photo-section">
+        <img [src]="profilePhotoUrl || 'assets/iconeLogado.jpg'" alt="Foto de perfil" class="profile-photo" />
+        <button type="button" (click)="openPhotoOptions()">Alterar imagem de perfil</button>
+    </div>
+
+<!-- Popup de imagem -->
+<div class="popup" *ngIf="showPhotoPopup">
+    <div class="popup-content">
+        <h3>Escolher imagem de perfil</h3>
+        <input type="file" (change)="onPhotoSelected($event)" accept="image/*" /><br />
+        <label>Ou colar URL:</label>
+        <input [(ngModel)]="photoUrlInput" type="text" placeholder="https://..." /><br />
+        <div *ngIf="photoError" style="color: red; font-size: 0.9em;">
+            {{ photoError }}
+        </div>
+        <button (click)="uploadFromUrl()">Confirmar</button>
+        <button (click)="closePhotoPopup()">Cancelar</button>
+        <img *ngIf="previewFileUrl" [src]="previewFileUrl" alt="Prévia" class="preview-image" />
+        <div *ngIf="photoError" class="error-message">{{ photoError }}</div>
+        <button (click)="previewImage()">Pré-visualizar imagem</button>
+        <button (click)="clearSelectedFile()">Limpar imagem do computador</button>
+    </div>
+    </div>
+</div>
+
+<div class="profile-container" *ngIf="profileForm">
+    <div class="info-group" [formGroup]="profileForm">
+    <label>Nome:</label>
+
+    <span *ngIf="!editingName">{{ profileForm.get('name')?.value }}</span>
+
+    <div *ngIf="editingName">
+    <input type="text" formControlName="name" />
+      <div class="button-row">
+          <button type="button" class="safe-button" (click)="confirmSave()">Salvar</button>
+          <button type="button" class="danger-button" (click)="cancelEditName()">Cancelar</button>
+      </div>
+    </div>
+
+
+        <button *ngIf="!editingName" type="button" class="safe-button" (click)="toggleEditName()">
+            ✎ Alterar nome
+        </button>
+    </div>
+
+    <div class="info-group">
+        <label>Email:</label>
+        <span>{{ profileForm.get('email')?.value }}</span>
+    </div>
+
+<div class="info-group">
+    <label>Aulas concluídas:</label>
+    <span>{{ lessonsCompleted }} aulas</span>
+</div>
+
+<button class="danger-button" (click)="confirmDelete()">Excluir conta</button>
+
+
+<!-- Popup de confirmação -->
+<div class="popup" *ngIf="showPopup">
+    <div class="popup-content">
+        <p>{{ popupMessage }}</p>
+        <button (click)="popupConfirm()">Sim</button>
+        <button (click)="popupCancel()">Não</button>
+    </div>
+  </div>
+
+</div>
