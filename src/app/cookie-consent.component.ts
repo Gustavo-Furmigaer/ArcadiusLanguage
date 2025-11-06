@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
         Usamos cookies para melhorar sua experiência. Ao continuar, você concorda
         com nossa política de privacidade.
       </p>
-      <button (click)="acceptCookies()">Aceitar</button>
+      <button (click)="acceptCookies()"></button>
     </div>
   `,
   styles: [`

@@ -116,8 +116,26 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<boolean> {
     console.log('[AuthService] Iniciando login...');
+
+    let attempts = Number(localStorage.getItem('loginAttempts') || 0);
+    const lastAttempt = Number(localStorage.getItem('lastAttempt') || 0);
+    const elapsed = Date.now() - lastAttempt;
+
+    // Reset após 5 minutos
+    if (elapsed > 5 * 60 * 1000) {
+      localStorage.setItem('loginAttempts', '0');
+      attempts = 0;
+    }
+
+    if (attempts >= 5 && elapsed < 5 * 60 * 1000) {
+      console.warn('[AuthService] Muitas tentativas. Aguarde 5 minutos.');
+      throw new Error('Muitas tentativas. Tente novamente em alguns minutos.');
+    }
+    // --- fim do controle ---
     try {
       const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
+      localStorage.removeItem('loginAttempts');
+      localStorage.removeItem('lastAttempt');
       console.log('[AuthService] Login Firebase OK');
       const user = userCredential.user;
       if (!user) throw new Error('Usuário não encontrado');
@@ -142,6 +160,9 @@ export class AuthService {
       return isAdmin;
     } catch (error) {
       console.error('[AuthService] Erro no login:', error);
+      let attempts = Number(localStorage.getItem('loginAttempts') || 0);
+      localStorage.setItem('loginAttempts', (attempts + 1).toString());
+      localStorage.setItem('lastAttempt', Date.now().toString());
       throw error;
     }
   }
