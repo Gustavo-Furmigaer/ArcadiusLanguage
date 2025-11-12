@@ -11,6 +11,8 @@ export class MfaService {
   // Lista de e-mails de teste que devem usar o fluxo "local" (sem enviar e-mail)
   private testEmails = [
     'teste321@email.com',
+    'teste123@email.com',
+    'teste@email.com',
     // adicione outros e-mails de teste aqui se quiser
   ];
 

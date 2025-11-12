@@ -76,11 +76,11 @@ export class RegisterComponent implements OnInit {
     }
 
     try {
-      const response = (window as any).grecaptcha.getResponse();
+      /*const response = (window as any).grecaptcha.getResponse();
       if (!response) {
         alert("Confirme o reCAPTCHA");
         return;
-      }
+      }*/
       
       await this.authService.register(
         this.f['email'].value,
@@ -88,7 +88,7 @@ export class RegisterComponent implements OnInit {
         this.f['name'].value
       );
 
-    this.router.navigate(['/home']);
+    this.router.navigate(['/games']);
   } catch (err) {
     console.error('Erro no registro', err);
   }
