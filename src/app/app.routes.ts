@@ -11,6 +11,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { GameManagementComponent } from './features/game-management/game-management.component';
 import { LanguageManagementComponent } from './features/language-management/language-management.component';
 import { AdminGuard } from './auth/guards/admin.guard';
+import { GameSimulatorComponent } from './pages/game-simulator/game-simulator';
 
 export const routes: Routes = [
   {path: '',
@@ -67,6 +68,10 @@ export const routes: Routes = [
     {path: 'register',
       component: RegisterComponent},
     {path: 'mfa', loadComponent: () => import('./pages/mfa/mfa.component').then(m => m.MfaComponent)},
+    {
+      path: 'simulator',
+      component: GameSimulatorComponent,
+      },
   {path: '**', redirectTo: 'index', pathMatch: 'full' },
 
 ];

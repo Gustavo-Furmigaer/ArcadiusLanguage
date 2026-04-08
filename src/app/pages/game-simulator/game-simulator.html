@@ -1,0 +1,29 @@
+<div style="padding: 20px;">
+
+  <h2>Simulador de Jogo 🎮</h2>
+
+  <button (click)="simularJogo()">
+    Simular Jogo
+  </button>
+
+  <hr>
+
+  <div *ngIf="stats">
+    <h3>Estatísticas</h3>
+    <p>Total de jogos: {{ stats.totalGames }}</p>
+    <p>Acertos: {{ stats.correctAnswers }}</p>
+    <p>Erros: {{ stats.wrongAnswers }}</p>
+  </div>
+
+  <hr>
+
+  <div>
+    <h3>Ranking (Top 10)</h3>
+    <ul>
+      <li *ngFor="let user of ranking">
+        {{ user.name }} - {{ user.score }}
+      </li>
+    </ul>
+  </div>
+
+</div>

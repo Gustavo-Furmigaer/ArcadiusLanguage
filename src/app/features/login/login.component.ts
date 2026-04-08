@@ -66,40 +66,41 @@ async onSubmit() {
 
   console.log('Formulário válido. Executando reCAPTCHA...');
   try {
-    const token = await this.recaptcha.execute('login');
-    console.log('[LoginComponent] Token reCAPTCHA:', token);
+  const token = await this.recaptcha.execute('login');
 
-    // ⚙️ Não faz login completo aqui — apenas inicia MFA
-    console.log('[LoginComponent] Iniciando fluxo MFA...');
-    await this.mfaservice.startMfa(email, password);
+  console.log('[LoginComponent] Validando login no Firebase...');
 
-    // ✅ Redireciona para a página MFA
-    this.router.navigate(['/mfa']);
-  } catch (error: any) {
-    console.error('[LoginComponent] Erro ao iniciar MFA:', error);
+  // 🔥 PASSO 1: validar login REAL
+  await this.authService.login(email, password);
 
-    if (error instanceof FirebaseError) {
-      switch (error.code) {
-        case 'auth/wrong-password':
-        case 'auth/invalid-credential':
-          this.authError = 'Senha incorreta.';
-          break;
-        case 'auth/user-not-found':
-          this.authError = 'Usuário não encontrado.';
-          break;
-        case 'auth/too-many-requests':
-          this.authError = 'Muitas tentativas. Tente novamente em alguns minutos.';
-          break;
-        default:
-          this.authError = 'Erro ao fazer login. Tente novamente.';
-          break;
-      }
-    } else if (error.message?.includes('Muitas tentativas')) {
-      this.authError = 'Muitas tentativas. Tente novamente em alguns minutos.';
-    } else {
-      this.authError = 'Erro inesperado.';
-      console.error('Erro desconhecido no login:', error);
+  console.log('[LoginComponent] Login válido. Iniciando MFA...');
+
+  // 🔐 PASSO 2: só agora inicia MFA
+  await this.mfaservice.startMfa(email, password);
+
+  this.router.navigate(['/mfa']);
+
+} catch (error: any) {
+  console.error('[LoginComponent] Erro no login:', error);
+
+  if (error instanceof FirebaseError) {
+    switch (error.code) {
+      case 'auth/wrong-password':
+      case 'auth/invalid-credential':
+        this.authError = 'Senha incorreta.';
+        break;
+      case 'auth/user-not-found':
+        this.authError = 'Usuário não encontrado.';
+        break;
+      case 'auth/too-many-requests':
+        this.authError = 'Muitas tentativas. Tente novamente em alguns minutos.';
+        break;
+      default:
+        this.authError = 'Erro ao fazer login.';
     }
+  } else {
+    this.authError = 'Muitas tentativas. Tente novamente em alguns minutos.';
   }
+}
 }
 }
